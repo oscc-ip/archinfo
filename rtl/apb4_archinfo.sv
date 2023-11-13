@@ -14,44 +14,46 @@
 `define ARCH_IDH 4'b0010 //BASEADDR+0x08 [31:24] reserve [23:0]: date(BCD)
 // verilog_format: on
 
-`define SYS_VAL 32'hFFFF_FFFF
-`define IDL_VAL 32'hFFFF_FFFF
+`define SYS_VAL 32'h101F_1010
+`define IDL_VAL 32'hFFFF_2022
 `define IDH_VAL 32'hFFFF_FFFF
 
 module apb4_archinfo (
     apb4_if.slave apb4
 );
 
-  logic [3:0] s_apb_addr;
+  logic [3:0] s_apb4_addr;
   logic [31:0] s_arch_sys_d, s_arch_sys_q;
   logic [31:0] s_arch_idl_d, s_arch_idl_q;
   logic [31:0] s_arch_idh_d, s_arch_idh_q;
   logic s_apb4_wr_hdshk, s_apb4_rd_hdshk;
 
-  assign s_apb_addr = apb4.paddr[5:2];
+  assign s_apb4_addr = apb4.paddr[5:2];
   assign s_apb4_wr_hdshk = apb4.psel && apb4.penable && apb4.pwrite;
   assign s_apb4_rd_hdshk = apb4.psel && apb4.penable && (~apb4.pwrite);
+  assign apb4.pready = 1'b1;
+  assign apb4.pslverr = 1'b0;
 
-  assign r_arch_sys_d = (s_apb4_wr_hdshk && s_apb_addr == `ARCH_SYS) ? apb4.pwdata : r_arch_sys_q;
+  assign s_arch_sys_d = (s_apb4_wr_hdshk && s_apb4_addr == `ARCH_SYS) ? apb4.pwdata : s_arch_sys_q;
   dffrc #(32, `SYS_VAL) u_arch_sys_dffrc (
-      apb4.hclk,
-      apb4.hresetn,
+      apb4.pclk,
+      apb4.presetn,
       s_arch_sys_d,
       s_arch_sys_q
   );
 
-  assign r_arch_idl_d = (s_apb4_wr_hdshk && s_apb_addr == `ARCH_IDL) ? apb4.pwdata : r_arch_idl_q;
+  assign s_arch_idl_d = (s_apb4_wr_hdshk && s_apb4_addr == `ARCH_IDL) ? apb4.pwdata : s_arch_idl_q;
   dffrc #(32, `IDL_VAL) u_arch_idl_dffrc (
-      apb4.hclk,
-      apb4.hresetn,
+      apb4.pclk,
+      apb4.presetn,
       s_arch_idl_d,
       s_arch_idl_q
   );
 
-  assign r_arch_idh_d = (s_apb4_wr_hdshk && s_apb_addr == `ARCH_IDH) ? apb4.pwdata : r_arch_idh_q;
+  assign s_arch_idh_d = (s_apb4_wr_hdshk && s_apb4_addr == `ARCH_IDH) ? apb4.pwdata : s_arch_idh_q;
   dffrc #(32, `IDH_VAL) u_arch_idh_dffrc (
-      apb4.hclk,
-      apb4.hresetn,
+      apb4.pclk,
+      apb4.presetn,
       s_arch_idh_d,
       s_arch_idh_q
   );
@@ -59,15 +61,13 @@ module apb4_archinfo (
   always_comb begin
     apb4.prdata = '0;
     if (s_apb4_rd_hdshk) begin
-      unique case (s_apb_addr)
+      unique case (s_apb4_addr)
         `ARCH_SYS: apb4.prdata = s_arch_sys_q;
         `ARCH_IDL: apb4.prdata = s_arch_idl_q;
         `ARCH_IDH: apb4.prdata = s_arch_idh_q;
+        default:   apb4.prdata = '0;
       endcase
     end
   end
-
-  assign apb4.pready = 1'b1;
-  assign apb4.pslerr = 1'b0;
 
 endmodule
