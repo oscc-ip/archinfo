@@ -24,12 +24,10 @@ comp:
 	@mkdir -p build
 	cd build && (${SIM_TOOL} ${SIM_OPTIONS} -top apb_archinfo_tb -l compile.log $(SRC_FILE))
 
-
 all:simv
 
 run: comp
 	cd build && ./simv -l run.log
-
 
 verdi:
 	${VERDI_TOOL} -ssf asic_top.fsdb &
