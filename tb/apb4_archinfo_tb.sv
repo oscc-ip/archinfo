@@ -17,6 +17,7 @@ module apb_archinfo_tb ();
     #1 rst_n_i = 1'b1;
     $display("%t [INFO]: tb init done", $time);
 
+    // read test
     u_apb4_master_model.cmp_data(8'd0, 32'hFFFF_0000, 32'h101F_1010);
     #12;
     u_apb4_master_model.cmp_data(8'd0, 32'hFFFF_0004, 32'hFFFF_2022);
