@@ -7,7 +7,7 @@ module apb_archinfo_tb ();
   initial begin
     $timeformat(-9, 1, "ns", 10);
     $fsdbDumpfile("./asic_top.fsdb");
-    $fsdbDumpvars(0, tb);
+    $fsdbDumpvars(0, apb_archinfo_tb);
   end
 
   initial begin
