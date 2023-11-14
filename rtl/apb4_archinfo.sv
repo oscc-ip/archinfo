@@ -9,9 +9,9 @@
 // See the Mulan PSL v2 for more details.
 
 // verilog_format: off
-`define ARCH_SYS 4'b0000 //BASEADDR+0x00
-`define ARCH_IDL 4'b0001 //BASEADDR+0x04
-`define ARCH_IDH 4'b0010 //BASEADDR+0x08
+`define ARCH_SYS 4'b0000 // BASEADDR + 0x00
+`define ARCH_IDL 4'b0001 // BASEADDR + 0x04
+`define ARCH_IDH 4'b0010 // BASEADDR + 0x08
 // verilog_format: on
 
 /* register mapping
