@@ -9,10 +9,28 @@
 // See the Mulan PSL v2 for more details.
 
 // verilog_format: off
-`define ARCH_SYS 4'b0000 //BASEADDR+0x00 [16] [19:8]: clock freq [7:0]: sram size
-`define ARCH_IDL 4'b0001 //BASEADDR+0x04 [31:30]: type [29:22]: vendor [21:6]: process(BCD) [5:0]: cust
-`define ARCH_IDH 4'b0010 //BASEADDR+0x08 [31:24] reserve [23:0]: date(BCD)
+`define ARCH_SYS 4'b0000 //BASEADDR+0x00
+`define ARCH_IDL 4'b0001 //BASEADDR+0x04
+`define ARCH_IDH 4'b0010 //BASEADDR+0x08
 // verilog_format: on
+
+/* register mapping
+ * ARCH_SYS:
+ * BITS:   | 31:20 | 19:8  | 7:0  |
+ * FIELDS: | RES   | CLOCK | SRAM |
+ * PERMS:  | NONE  | RW    | RW   |
+ * -------------------------------------------
+ * ARCH_IDL:
+ * BITS:   | 31:30 | 29:22  | 21:6    | 5:0  |
+ * FIELDS: | TYPE  | VENDOR | PROCESS | CUST |
+ * PERMS:  | RW    | RW     | RW      | RW   |
+ * -------------------------------------------
+ * ARCH_IDH:
+ * BITS:   | 31:24 | 23:0 |
+ * FIELDS: | RES   | DATE |
+ * PERMS:  | NONE  | RW   |
+ * -------------------------------------------
+*/
 
 `define SYS_VAL 32'h101F_1010
 `define IDL_VAL 32'hFFFF_2022
