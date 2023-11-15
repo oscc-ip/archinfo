@@ -1,5 +1,5 @@
 NOVAS        := /eda/tools/snps/verdi/R-2020.12/share/PLI/VCS/LINUX64
-EXTRA        := -P ${NOVAS}/novas.tab ${NOVAS}/pli.a		
+EXTRA        := -P ${NOVAS}/novas.tab ${NOVAS}/pli.a
 
 VERDI_TOOL   := verdi
 SIM_TOOL     := vcs
@@ -15,22 +15,32 @@ SIM_OPTIONS  := -full64 -debug_acc+all  +v2k -sverilog -timescale=1ns/10ps \
 
 SRC_FILE ?=
 SRC_FILE += ../../common/rtl/register.sv
-SRC_FILE += ../../common/rtl/interface/apb4_if.sv
-SRC_FILE += ../../common/rtl/model/apb4_master_model.sv
 SRC_FILE += ../rtl/apb4_archinfo.sv 
+SRC_FILE += ../tb/test_top.sv
 SRC_FILE += ../tb/apb4_archinfo_tb.sv
+
+SIM_INC ?=
+SIM_INC += +incdir+../../common/rtl/verif
+SIM_INC += +incdir+../../common/rtl/interface
+
+SIM_APP  ?= apb4_archinfo
+SIM_TOP  := $(SIM_APP)_tb
+
+RUN_ARGS ?=
+RUN_ARGS += +WAVE_ON
+RUN_ARGS += +WAVE_NAME=$(SIM_TOP).fsdb
 
 comp:
 	@mkdir -p build
-	cd build && (${SIM_TOOL} ${SIM_OPTIONS} -top apb_archinfo_tb -l compile.log $(SRC_FILE))
+	cd build && (${SIM_TOOL} ${SIM_OPTIONS} -top $(SIM_TOP) -l compile.log $(SRC_FILE) $(SIM_INC))
 
 all:simv
 
 run: comp
-	cd build && ./simv -l run.log
+	cd build && ./simv -l run.log ${RUN_ARGS}
 
-verdi:
-	${VERDI_TOOL} -ssf asic_top.fsdb &
+wave:
+	${VERDI_TOOL} -ssf build/$(SIM_TOP).fsdb &
 
 .PHONY : clean simv verdi
 

@@ -1,40 +1,53 @@
-`timescale 1ns / 1ps
+// Copyright (c) 2023 Beijing Institute of Open Source Chip
+// archinfo is licensed under Mulan PSL v2.
+// You can use this software according to the terms and conditions of the Mulan PSL v2.
+// You may obtain a copy of Mulan PSL v2 at:
+//             http://license.coscl.org.cn/MulanPSL2
+// THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+// EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+// MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+// See the Mulan PSL v2 for more details.
 
-module apb_archinfo_tb ();
+`include "apb4_if.sv"
+`include "helper.sv"
+
+module apb4_archinfo_tb ();
+  localparam CLK_PEROID = 10;
   logic rst_n_i, clk_i;
-  always #5.000 clk_i <= ~clk_i;  // 100MHz
+  always #(CLK_PEROID / 2) clk_i <= ~clk_i;
 
-  initial begin
+  string wave_name = "default.fsdb";
+  task sim_config();
     $timeformat(-9, 1, "ns", 10);
-    $fsdbDumpfile("./asic_top.fsdb");
-    $fsdbDumpvars(0, apb_archinfo_tb);
-  end
+    if ($test$plusargs("WAVE_ON")) begin
+      $value$plusargs("WAVE_NAME=%s", wave_name);
+      $fsdbDumpfile(wave_name);
+      $fsdbDumpvars("+all");
+    end
+  endtask
 
-  initial begin
+  task sim_reset(int unsigned delay);
     clk_i   = 1'b0;
     rst_n_i = 1'b0;
-    repeat (40) @(posedge clk_i);
+    repeat (delay) @(posedge clk_i);
     #1 rst_n_i = 1'b1;
-    $display("%t [INFO]: tb init done", $time);
+  endtask
 
-    // read test
-    u_apb4_master_model.cmp_data(8'd0, 32'hFFFF_0000, 32'h101F_1010);
-    #12;
-    u_apb4_master_model.cmp_data(8'd0, 32'hFFFF_0004, 32'hFFFF_2022);
-    #12;
-    u_apb4_master_model.cmp_data(8'd0, 32'hFFFF_0008, 32'hFFFF_FFFF);
-    #11000 $finish;
-  end
-
-  logic [31:0] sync, out, dir, iof;
-  logic irq;
   apb4_if u_apb4_if (
       clk_i,
       rst_n_i
   );
 
-  apb4_master_model u_apb4_master_model (u_apb4_if);
+  test_top u_test_top (u_apb4_if);
   apb4_archinfo u_apb4_archinfo (u_apb4_if);
 
+  initial begin
+    Helper::start_banner();
+    sim_config();
+    sim_reset(40);
+    Helper::print("tb init done");
+    Helper::end_banner();
+    #11000 $finish;
+  end
 
 endmodule
