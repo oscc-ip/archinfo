@@ -28,7 +28,7 @@ SIM_APP  ?= apb4_archinfo
 SIM_TOP  := $(SIM_APP)_tb
 
 RUN_ARGS ?=
-RUN_ARGS += +WAVE_ON
+RUN_ARGS += +WAVE_OFF
 RUN_ARGS += +WAVE_NAME=$(SIM_TOP).fsdb
 
 comp:

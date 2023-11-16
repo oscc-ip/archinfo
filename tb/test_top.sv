@@ -14,12 +14,27 @@ program automatic test_top (
     apb4_if.master apb4
 );
 
-  // APB4Master archinfo_mst_hdl;
+  string wave_name = "default.fsdb";
+  task sim_config();
+    $timeformat(-9, 1, "ns", 10);
+    if ($test$plusargs("WAVE_ON")) begin
+      $value$plusargs("WAVE_NAME=%s", wave_name);
+      $fsdbDumpfile(wave_name);
+      $fsdbDumpvars("+all");
+    end
+  endtask
+
   ArchInfoTest archinfo_hdl;
+
   initial begin
+    Helper::start_banner();
+    sim_config();
+    Helper::print("tb init done");
     archinfo_hdl = new("archinfo_test", apb4);
     archinfo_hdl.init();
     archinfo_hdl.test_reset_register();
     #21000 $finish;
+    Helper::end_banner();
   end
+
 endprogram

@@ -14,20 +14,9 @@
 module apb4_archinfo_tb ();
   localparam CLK_PEROID = 10;
   logic rst_n_i, clk_i;
-  always #(CLK_PEROID / 2) clk_i <= ~clk_i;
 
-  string wave_name = "default.fsdb";
-  task sim_config();
-    $timeformat(-9, 1, "ns", 10);
-    if ($test$plusargs("WAVE_ON")) begin
-      $value$plusargs("WAVE_NAME=%s", wave_name);
-      $fsdbDumpfile(wave_name);
-      $fsdbDumpvars("+all");
-    end
-  endtask
 
   task sim_reset(int unsigned delay);
-    clk_i   = 1'b0;
     rst_n_i = 1'b0;
     repeat (delay) @(posedge clk_i);
     #1 rst_n_i = 1'b1;
@@ -38,15 +27,18 @@ module apb4_archinfo_tb ();
       rst_n_i
   );
 
-  test_top u_test_top (u_apb4_if);
-  apb4_archinfo u_apb4_archinfo (u_apb4_if);
+  initial begin
+    clk_i = 1'b0;
+    forever begin
+      #(CLK_PEROID / 2) clk_i <= ~clk_i;
+    end
+  end
 
   initial begin
-    Helper::start_banner();
-    sim_config();
     sim_reset(40);
-    Helper::print("tb init done");
-    Helper::end_banner();
   end
+
+  test_top u_test_top (u_apb4_if);
+  apb4_archinfo u_apb4_archinfo (u_apb4_if);
 
 endmodule
