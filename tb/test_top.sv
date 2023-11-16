@@ -9,17 +9,17 @@
 // See the Mulan PSL v2 for more details.
 
 `include "apb4_if.sv"
-`include "apb4_master.sv"
 
 program automatic test_top (
     apb4_if.master apb4
 );
 
-  APB4Master apb4_mst_hdl;
+  // APB4Master archinfo_mst_hdl;
+  ArchInfoTest archinfo_hdl;
   initial begin
-    apb4_mst_hdl = new("apb4_master", apb4);
-    apb4_mst_hdl.init();
-    apb4_mst_hdl.test_reset_register();
+    archinfo_hdl = new("archinfo_test", apb4);
+    archinfo_hdl.init();
+    archinfo_hdl.test_reset_register();
     #21000 $finish;
   end
 endprogram

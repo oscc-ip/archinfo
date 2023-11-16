@@ -14,12 +14,13 @@ SIM_OPTIONS  := -full64 -debug_acc+all  +v2k -sverilog -timescale=1ns/10ps \
 				-kdb \
 
 SRC_FILE ?=
-SRC_FILE += ../../common/rtl/register.sv
-SRC_FILE += ../rtl/apb4_archinfo.sv 
+SRC_FILE += ../rtl/apb4_archinfo.sv
+SRC_FILE += ../tb/archinfo_test.sv
 SRC_FILE += ../tb/test_top.sv
 SRC_FILE += ../tb/apb4_archinfo_tb.sv
 
 SIM_INC ?=
+SIM_INC += +incdir+../../common/rtl/
 SIM_INC += +incdir+../../common/rtl/verif
 SIM_INC += +incdir+../../common/rtl/interface
 

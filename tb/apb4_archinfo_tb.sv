@@ -47,7 +47,6 @@ module apb4_archinfo_tb ();
     sim_reset(40);
     Helper::print("tb init done");
     Helper::end_banner();
-    #11000 $finish;
   end
 
 endmodule

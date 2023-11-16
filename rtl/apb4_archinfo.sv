@@ -8,6 +8,8 @@
 // MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
 // See the Mulan PSL v2 for more details.
 
+`include "register.sv"
+
 // verilog_format: off
 `define ARCH_SYS 4'b0000 // BASEADDR + 0x00
 `define ARCH_IDL 4'b0001 // BASEADDR + 0x04
