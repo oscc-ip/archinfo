@@ -29,12 +29,14 @@ program automatic test_top (
   initial begin
     Helper::start_banner();
     sim_config();
+    @(posedge apb4.presetn);
     Helper::print("tb init done");
     archinfo_hdl = new("archinfo_test", apb4);
     archinfo_hdl.init();
     archinfo_hdl.test_reset_register();
-    #21000 $finish;
+    archinfo_hdl.test_wr_rd_register();
     Helper::end_banner();
+    #21000 $finish;
   end
 
 endprogram

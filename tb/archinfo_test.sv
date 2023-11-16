@@ -18,11 +18,12 @@
 `define IDH_VAL 32'hFFFF_FFFF
 
 class ArchInfoTest extends APB4Master;
-  string                        name;
-  virtual apb4_if.master        apb4;
+  string                 name;
+  virtual apb4_if.master apb4;
 
   extern function new(string name = "archinfo_test", virtual apb4_if.master apb4);
   extern task test_reset_register();
+  extern task test_wr_rd_register(input bit [31:0] run_times = 1000);
 endclass
 
 function ArchInfoTest::new(string name, virtual apb4_if.master apb4);
@@ -40,6 +41,29 @@ task ArchInfoTest::test_reset_register();
   this.read(32'hFFFF_0008);
   Helper::check("IDH_VAL REG", super.rd_data, `IDH_VAL, Helper::EQUL);
 endtask
+
+task ArchInfoTest::test_wr_rd_register(input bit [31:0] run_times = 1000);
+  super.test_wr_rd_register();
+
+  for (int i = 0; i < run_times; i++) begin
+    super.wr_data = $random;
+    this.write(32'hFFFF_0000, super.wr_data);
+    this.read(32'hFFFF_0000);
+    Helper::check("SYS_VAL REG", super.rd_data, super.wr_data, Helper::EQUL, Helper::NORM);
+
+    super.wr_data = $random;
+    this.write(32'hFFFF_0004, super.wr_data);
+    this.read(32'hFFFF_0004);
+    Helper::check("IDL_VAL REG", super.rd_data, super.wr_data, Helper::EQUL, Helper::NORM);
+
+    super.wr_data = $random;
+    this.write(32'hFFFF_0008, super.wr_data);
+    this.read(32'hFFFF_0008);
+    Helper::check("IDH_VAL REG", super.rd_data, super.wr_data, Helper::EQUL, Helper::NORM);
+  end
+
+endtask
+
 `endif
 
 

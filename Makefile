@@ -27,8 +27,9 @@ SIM_INC += +incdir+../../common/rtl/interface
 SIM_APP  ?= apb4_archinfo
 SIM_TOP  := $(SIM_APP)_tb
 
+WAVE_CFG ?= # WAVE_ON
 RUN_ARGS ?=
-RUN_ARGS += +WAVE_OFF
+RUN_ARGS += +${WAVE_CFG}
 RUN_ARGS += +WAVE_NAME=$(SIM_TOP).fsdb
 
 comp:
