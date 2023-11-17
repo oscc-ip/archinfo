@@ -20,6 +20,7 @@ SRC_FILE += ../tb/test_top.sv
 SRC_FILE += ../tb/apb4_archinfo_tb.sv
 
 SIM_INC ?=
+SIM_INC += +incdir+../rtl/
 SIM_INC += +incdir+../../common/rtl/
 SIM_INC += +incdir+../../common/rtl/verif
 SIM_INC += +incdir+../../common/rtl/interface

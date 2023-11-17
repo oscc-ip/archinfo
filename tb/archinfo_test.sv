@@ -12,10 +12,7 @@
 `define INC_ARCHINFO_TEST_SV
 
 `include "apb4_master.sv"
-
-`define SYS_VAL 32'h101F_1010
-`define IDL_VAL 32'hFFFF_2022
-`define IDH_VAL 32'hFFFF_FFFF
+`include "archinfo_define.sv"
 
 class ArchInfoTest extends APB4Master;
   string                 name;
@@ -34,32 +31,18 @@ endfunction
 
 task ArchInfoTest::test_reset_register();
   super.test_reset_register();
-  this.read(32'hFFFF_0000);
-  Helper::check("SYS_VAL REG", super.rd_data, `SYS_VAL, Helper::EQUL);
-  this.read(32'hFFFF_0004);
-  Helper::check("IDL_VAL REG", super.rd_data, `IDL_VAL, Helper::EQUL);
-  this.read(32'hFFFF_0008);
-  Helper::check("IDH_VAL REG", super.rd_data, `IDH_VAL, Helper::EQUL);
+  this.rd_check(`ARCHINFO_SYS_ADDR, "SYS_VAL REG", `SYS_VAL, Helper::EQUL);
+  this.rd_check(`ARCHINFO_IDL_ADDR, "IDL_VAL REG", `IDL_VAL, Helper::EQUL);
+  this.rd_check(`ARCHINFO_IDH_ADDR, "IDH_VAL REG", `IDH_VAL, Helper::EQUL);
 endtask
 
 task ArchInfoTest::test_wr_rd_register(input bit [31:0] run_times = 1000);
   super.test_wr_rd_register();
 
   for (int i = 0; i < run_times; i++) begin
-    super.wr_data = $random;
-    this.write(32'hFFFF_0000, super.wr_data);
-    this.read(32'hFFFF_0000);
-    Helper::check("SYS_VAL REG", super.rd_data, super.wr_data, Helper::EQUL, Helper::NORM);
-
-    super.wr_data = $random;
-    this.write(32'hFFFF_0004, super.wr_data);
-    this.read(32'hFFFF_0004);
-    Helper::check("IDL_VAL REG", super.rd_data, super.wr_data, Helper::EQUL, Helper::NORM);
-
-    super.wr_data = $random;
-    this.write(32'hFFFF_0008, super.wr_data);
-    this.read(32'hFFFF_0008);
-    Helper::check("IDH_VAL REG", super.rd_data, super.wr_data, Helper::EQUL, Helper::NORM);
+    this.wr_check(`ARCHINFO_SYS_ADDR, "SYS_VAL REG", $random, Helper::EQUL);
+    this.wr_check(`ARCHINFO_IDL_ADDR, "IDL_VAL REG", $random, Helper::EQUL);
+    this.wr_check(`ARCHINFO_IDH_ADDR, "IDH_VAL REG", $random, Helper::EQUL);
   end
 
 endtask
