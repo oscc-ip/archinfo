@@ -37,15 +37,13 @@ comp:
 	@mkdir -p build
 	cd build && (${SIM_TOOL} ${SIM_OPTIONS} -top $(SIM_TOP) -l compile.log $(SRC_FILE) $(SIM_INC))
 
-all:simv
-
 run: comp
 	cd build && ./simv -l run.log ${RUN_ARGS}
 
 wave:
 	${VERDI_TOOL} -ssf build/$(SIM_TOP).fsdb &
 
-.PHONY : clean simv verdi
-
 clean :
 	rm -rf build
+
+.PHONY : wave clean

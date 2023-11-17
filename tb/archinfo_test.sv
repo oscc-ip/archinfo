@@ -31,9 +31,9 @@ endfunction
 
 task ArchInfoTest::test_reset_register();
   super.test_reset_register();
-  this.rd_check(`ARCHINFO_SYS_ADDR, "SYS_VAL REG", `SYS_VAL, Helper::EQUL);
-  this.rd_check(`ARCHINFO_IDL_ADDR, "IDL_VAL REG", `IDL_VAL, Helper::EQUL);
-  this.rd_check(`ARCHINFO_IDH_ADDR, "IDH_VAL REG", `IDH_VAL, Helper::EQUL);
+  this.rd_check(`ARCHINFO_SYS_ADDR, "SYS_VAL REG", `SYS_VAL, Helper::EQUL, Helper::INFO);
+  this.rd_check(`ARCHINFO_IDL_ADDR, "IDL_VAL REG", `IDL_VAL, Helper::EQUL, Helper::INFO);
+  this.rd_check(`ARCHINFO_IDH_ADDR, "IDH_VAL REG", `IDH_VAL, Helper::EQUL, Helper::INFO);
 endtask
 
 task ArchInfoTest::test_wr_rd_register(input bit [31:0] run_times = 1000);
@@ -48,5 +48,3 @@ task ArchInfoTest::test_wr_rd_register(input bit [31:0] run_times = 1000);
 endtask
 
 `endif
-
-

@@ -9,14 +9,12 @@
 // See the Mulan PSL v2 for more details.
 
 `include "apb4_if.sv"
-`include "helper.sv"
 
 module apb4_archinfo_tb ();
   localparam CLK_PEROID = 10;
   logic rst_n_i, clk_i;
 
-
-  task sim_reset(int unsigned delay);
+  task sim_reset(int delay);
     rst_n_i = 1'b0;
     repeat (delay) @(posedge clk_i);
     #1 rst_n_i = 1'b1;

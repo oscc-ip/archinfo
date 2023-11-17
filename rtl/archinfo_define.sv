@@ -11,18 +11,6 @@
 `ifndef INC_ARCHINFO_DEF_SV
 `define INC_ARCHINFO_DEF_SV
 
-`define ARCHINFO_SYS 4'b0000 // BASEADDR + 0x00
-`define ARCHINFO_IDL 4'b0001 // BASEADDR + 0x04
-`define ARCHINFO_IDH 4'b0010 // BASEADDR + 0x08
-
-`define ARCHINFO_SYS_ADDR {26'b0, `ARCHINFO_SYS, 2'b00}
-`define ARCHINFO_IDL_ADDR {26'b0, `ARCHINFO_IDL, 2'b00}
-`define ARCHINFO_IDH_ADDR {26'b0, `ARCHINFO_IDH, 2'b00}
-
-`define SYS_VAL 32'h101F_1010
-`define IDL_VAL 32'hFFFF_2022
-`define IDH_VAL 32'hFFFF_FFFF
-
 /* register mapping
  * ARCHINFO_SYS:
  * BITS:   | 31:20 | 19:8  | 7:0  |
@@ -40,5 +28,19 @@
  * PERMS:  | NONE  | RW   |
  * -------------------------------------------
 */
+
+// verilog_format: off
+`define ARCHINFO_SYS 4'b0000 // BASEADDR + 0x00
+`define ARCHINFO_IDL 4'b0001 // BASEADDR + 0x04
+`define ARCHINFO_IDH 4'b0010 // BASEADDR + 0x08
+
+`define ARCHINFO_SYS_ADDR {26'b0, `ARCHINFO_SYS, 2'b00}
+`define ARCHINFO_IDL_ADDR {26'b0, `ARCHINFO_IDL, 2'b00}
+`define ARCHINFO_IDH_ADDR {26'b0, `ARCHINFO_IDH, 2'b00}
+
+`define SYS_VAL 32'h101F_1010
+`define IDL_VAL 32'hFFFF_2022
+`define IDH_VAL 32'hFFFF_FFFF
+// verilog_format: on
 
 `endif
