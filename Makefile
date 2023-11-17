@@ -4,14 +4,14 @@ EXTRA        := -P ${NOVAS}/novas.tab ${NOVAS}/pli.a
 VERDI_TOOL   := verdi
 SIM_TOOL     := vcs
 SIM_OPTIONS  := -full64 -debug_acc+all  +v2k -sverilog -timescale=1ns/10ps \
-				${EXTRA} \
-				+error+500\
-				+define+SVA_OFF\
-				-work DEFAULT\
-				+vcs+flush+all \
-				+lint=TFIPC-L \
-				+define+S50 \
-				-kdb \
+                ${EXTRA} \
+                +error+500\
+                +define+SVA_OFF\
+                -work DEFAULT\
+                +vcs+flush+all \
+                +lint=TFIPC-L \
+                +define+S50 \
+                -kdb \
 
 SRC_FILE ?=
 SRC_FILE += ../rtl/apb4_archinfo.sv
