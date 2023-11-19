@@ -34,8 +34,8 @@ program automatic test_top (
     Helper::print("tb init done");
     archinfo_hdl = new("archinfo_test", apb4);
     archinfo_hdl.init();
-    archinfo_hdl.test_reset_register();
-    archinfo_hdl.test_wr_rd_register();
+    archinfo_hdl.test_reset_reg();
+    archinfo_hdl.test_wr_rd_reg();
     Helper::end_banner();
     #21000 $finish;
   end

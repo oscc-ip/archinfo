@@ -19,8 +19,8 @@ class ArchInfoTest extends APB4Master;
   virtual apb4_if.master apb4;
 
   extern function new(string name = "archinfo_test", virtual apb4_if.master apb4);
-  extern task test_reset_register();
-  extern task test_wr_rd_register(input bit [31:0] run_times = 1000);
+  extern task test_reset_reg();
+  extern task test_wr_rd_reg(input bit [31:0] run_times = 1000);
 endclass
 
 function ArchInfoTest::new(string name, virtual apb4_if.master apb4);
@@ -29,20 +29,20 @@ function ArchInfoTest::new(string name, virtual apb4_if.master apb4);
   this.apb4 = apb4;
 endfunction
 
-task ArchInfoTest::test_reset_register();
-  super.test_reset_register();
+task ArchInfoTest::test_reset_reg();
+  super.test_reset_reg();
   this.rd_check(`ARCHINFO_SYS_ADDR, "SYS_VAL REG", `SYS_VAL, Helper::EQUL, Helper::INFO);
   this.rd_check(`ARCHINFO_IDL_ADDR, "IDL_VAL REG", `IDL_VAL, Helper::EQUL, Helper::INFO);
   this.rd_check(`ARCHINFO_IDH_ADDR, "IDH_VAL REG", `IDH_VAL, Helper::EQUL, Helper::INFO);
 endtask
 
-task ArchInfoTest::test_wr_rd_register(input bit [31:0] run_times = 1000);
-  super.test_wr_rd_register();
+task ArchInfoTest::test_wr_rd_reg(input bit [31:0] run_times = 1000);
+  super.test_wr_rd_reg();
 
   for (int i = 0; i < run_times; i++) begin
-    this.wr_check(`ARCHINFO_SYS_ADDR, "SYS_VAL REG", $random, Helper::EQUL);
-    this.wr_check(`ARCHINFO_IDL_ADDR, "IDL_VAL REG", $random, Helper::EQUL);
-    this.wr_check(`ARCHINFO_IDH_ADDR, "IDH_VAL REG", $random, Helper::EQUL);
+    this.wr_rd_check(`ARCHINFO_SYS_ADDR, "SYS_VAL REG", $random, Helper::EQUL);
+    this.wr_rd_check(`ARCHINFO_IDL_ADDR, "IDL_VAL REG", $random, Helper::EQUL);
+    this.wr_rd_check(`ARCHINFO_IDH_ADDR, "IDH_VAL REG", $random, Helper::EQUL);
   end
 
 endtask
