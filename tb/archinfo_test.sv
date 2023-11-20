@@ -40,9 +40,11 @@ task ArchInfoTest::test_wr_rd_reg(input bit [31:0] run_times = 1000);
   super.test_wr_rd_reg();
 
   for (int i = 0; i < run_times; i++) begin
-    this.wr_rd_check(`ARCHINFO_SYS_ADDR, "SYS_VAL REG", $random, Helper::EQUL);
-    this.wr_rd_check(`ARCHINFO_IDL_ADDR, "IDL_VAL REG", $random, Helper::EQUL);
-    this.wr_rd_check(`ARCHINFO_IDH_ADDR, "IDH_VAL REG", $random, Helper::EQUL);
+    // verilog_format: off
+    this.wr_rd_check(`ARCHINFO_SYS_ADDR, "SYS_VAL REG", $random & {`ARCHINFO_SYS_WIDTH{1'b1}}, Helper::EQUL);
+    this.wr_rd_check(`ARCHINFO_IDL_ADDR, "IDL_VAL REG", $random & {`ARCHINFO_IDL_WIDTH{1'b1}}, Helper::EQUL);
+    this.wr_rd_check(`ARCHINFO_IDH_ADDR, "IDH_VAL REG", $random & {`ARCHINFO_IDH_WIDTH{1'b1}}, Helper::EQUL);
+    // verilog_format: on
   end
 
 endtask

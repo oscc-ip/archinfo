@@ -16,9 +16,9 @@ module apb4_archinfo (
 );
 
   logic [3:0] s_apb4_addr;
-  logic [31:0] s_arch_sys_d, s_arch_sys_q;
-  logic [31:0] s_arch_idl_d, s_arch_idl_q;
-  logic [31:0] s_arch_idh_d, s_arch_idh_q;
+  logic [`ARCHINFO_SYS_WIDTH-1:0] s_arch_sys_d, s_arch_sys_q;
+  logic [`ARCHINFO_IDL_WIDTH-1:0] s_arch_idl_d, s_arch_idl_q;
+  logic [`ARCHINFO_IDH_WIDTH-1:0] s_arch_idh_d, s_arch_idh_q;
   logic s_apb4_wr_hdshk, s_apb4_rd_hdshk;
 
   assign s_apb4_addr = apb4.paddr[5:2];
@@ -27,24 +27,24 @@ module apb4_archinfo (
   assign apb4.pready = 1'b1;
   assign apb4.pslverr = 1'b0;
 
-  assign s_arch_sys_d = (s_apb4_wr_hdshk && s_apb4_addr == `ARCHINFO_SYS) ? apb4.pwdata : s_arch_sys_q;
-  dffrc #(32, `SYS_VAL) u_arch_sys_dffrc (
+  assign s_arch_sys_d = (s_apb4_wr_hdshk && s_apb4_addr == `ARCHINFO_SYS) ? apb4.pwdata[`ARCHINFO_SYS_WIDTH-1:0] : s_arch_sys_q;
+  dffrc #(`ARCHINFO_SYS_WIDTH, `SYS_VAL) u_arch_sys_dffrc (
       apb4.pclk,
       apb4.presetn,
       s_arch_sys_d,
       s_arch_sys_q
   );
 
-  assign s_arch_idl_d = (s_apb4_wr_hdshk && s_apb4_addr == `ARCHINFO_IDL) ? apb4.pwdata : s_arch_idl_q;
-  dffrc #(32, `IDL_VAL) u_arch_idl_dffrc (
+  assign s_arch_idl_d = (s_apb4_wr_hdshk && s_apb4_addr == `ARCHINFO_IDL) ? apb4.pwdata[`ARCHINFO_IDL_WIDTH-1:0] : s_arch_idl_q;
+  dffrc #(`ARCHINFO_IDL_WIDTH, `IDL_VAL) u_arch_idl_dffrc (
       apb4.pclk,
       apb4.presetn,
       s_arch_idl_d,
       s_arch_idl_q
   );
 
-  assign s_arch_idh_d = (s_apb4_wr_hdshk && s_apb4_addr == `ARCHINFO_IDH) ? apb4.pwdata : s_arch_idh_q;
-  dffrc #(32, `IDH_VAL) u_arch_idh_dffrc (
+  assign s_arch_idh_d = (s_apb4_wr_hdshk && s_apb4_addr == `ARCHINFO_IDH) ? apb4.pwdata[`ARCHINFO_IDH_WIDTH-1:0] : s_arch_idh_q;
+  dffrc #(`ARCHINFO_IDH_WIDTH, `IDH_VAL) u_arch_idh_dffrc (
       apb4.pclk,
       apb4.presetn,
       s_arch_idh_d,
@@ -55,10 +55,10 @@ module apb4_archinfo (
     apb4.prdata = '0;
     if (s_apb4_rd_hdshk) begin
       unique case (s_apb4_addr)
-        `ARCHINFO_SYS: apb4.prdata = s_arch_sys_q;
-        `ARCHINFO_IDL: apb4.prdata = s_arch_idl_q;
-        `ARCHINFO_IDH: apb4.prdata = s_arch_idh_q;
-        default:   apb4.prdata = '0;
+        `ARCHINFO_SYS: apb4.prdata[`ARCHINFO_SYS_WIDTH-1:0] = s_arch_sys_q;
+        `ARCHINFO_IDL: apb4.prdata[`ARCHINFO_IDL_WIDTH-1:0] = s_arch_idl_q;
+        `ARCHINFO_IDH: apb4.prdata[`ARCHINFO_IDH_WIDTH-1:0] = s_arch_idh_q;
+        default:       apb4.prdata = '0;
       endcase
     end
   end

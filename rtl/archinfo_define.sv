@@ -38,9 +38,13 @@
 `define ARCHINFO_IDL_ADDR {26'b0, `ARCHINFO_IDL, 2'b00}
 `define ARCHINFO_IDH_ADDR {26'b0, `ARCHINFO_IDH, 2'b00}
 
-`define SYS_VAL 32'h101F_1010
+`define ARCHINFO_SYS_WIDTH 20
+`define ARCHINFO_IDL_WIDTH 32
+`define ARCHINFO_IDH_WIDTH 24
+
+`define SYS_VAL 20'hF_1010
 `define IDL_VAL 32'hFFFF_2022
-`define IDH_VAL 32'hFFFF_FFFF
+`define IDH_VAL 24'hFF_FFFF
 // verilog_format: on
 
 `endif
