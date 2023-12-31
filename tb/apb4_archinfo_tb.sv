@@ -36,7 +36,7 @@ module apb4_archinfo_tb ();
     sim_reset(40);
   end
 
-  test_top u_test_top (u_apb4_if);
-  apb4_archinfo u_apb4_archinfo (u_apb4_if);
+  test_top u_test_top (u_apb4_if.master);
+  apb4_archinfo u_apb4_archinfo (u_apb4_if.slave);
 
 endmodule
