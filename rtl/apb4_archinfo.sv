@@ -32,7 +32,7 @@ module apb4_archinfo (
 
   assign s_arch_sys_en   = s_apb4_wr_hdshk && s_apb4_addr == `ARCHINFO_SYS;
   assign s_arch_sys_d    = s_arch_sys_en ? apb4.pwdata[`ARCHINFO_SYS_WIDTH-1:0] : s_arch_sys_q;
-  dfferc #(`ARCHINFO_SYS_WIDTH, `SYS_VAL) u_arch_sys_dffrc (
+  dfferc #(`ARCHINFO_SYS_WIDTH, `SYS_VAL) u_arch_sys_dfferc (
       apb4.pclk,
       apb4.presetn,
       s_arch_sys_en,
@@ -42,7 +42,7 @@ module apb4_archinfo (
 
   assign s_arch_idl_en = s_apb4_wr_hdshk && s_apb4_addr == `ARCHINFO_IDL;
   assign s_arch_idl_d  = s_arch_idl_en ? apb4.pwdata[`ARCHINFO_IDL_WIDTH-1:0] : s_arch_idl_q;
-  dfferc #(`ARCHINFO_IDL_WIDTH, `IDL_VAL) u_arch_idl_dffrc (
+  dfferc #(`ARCHINFO_IDL_WIDTH, `IDL_VAL) u_arch_idl_dfferc (
       apb4.pclk,
       apb4.presetn,
       s_arch_idl_en,
@@ -52,7 +52,7 @@ module apb4_archinfo (
 
   assign s_arch_idh_en = s_apb4_wr_hdshk && s_apb4_addr == `ARCHINFO_IDH;
   assign s_arch_idh_d  = s_arch_idh_en ? apb4.pwdata[`ARCHINFO_IDH_WIDTH-1:0] : s_arch_idh_q;
-  dfferc #(`ARCHINFO_IDH_WIDTH, `IDH_VAL) u_arch_idh_dffrc (
+  dfferc #(`ARCHINFO_IDH_WIDTH, `IDH_VAL) u_arch_idh_dfferc (
       apb4.pclk,
       apb4.presetn,
       s_arch_idh_en,
