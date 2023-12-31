@@ -16,13 +16,13 @@ module apb4_archinfo (
 );
 
   logic [3:0] s_apb4_addr;
+  logic s_apb4_wr_hdshk, s_apb4_rd_hdshk;
   logic [`ARCHINFO_SYS_WIDTH-1:0] s_arch_sys_d, s_arch_sys_q;
   logic s_arch_sys_en;
   logic [`ARCHINFO_IDL_WIDTH-1:0] s_arch_idl_d, s_arch_idl_q;
   logic s_arch_idl_en;
   logic [`ARCHINFO_IDH_WIDTH-1:0] s_arch_idh_d, s_arch_idh_q;
   logic s_arch_idh_en;
-  logic s_apb4_wr_hdshk, s_apb4_rd_hdshk;
 
   assign s_apb4_addr     = apb4.paddr[5:2];
   assign s_apb4_wr_hdshk = apb4.psel && apb4.penable && apb4.pwrite;
