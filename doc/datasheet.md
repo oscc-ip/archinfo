@@ -1,7 +1,7 @@
 ## Datasheet
 
 ### Overview
-The archinfo IP is a fully parameterised soft IP recording the SoC architecture and ASIC backend informations. The IP features an APB4 slave interface, fully compliant with the AMBA APB Protocol Specification v2.0.
+The `archinfo` IP is a fully parameterised soft IP recording the SoC architecture and ASIC backend informations. The IP features an APB4 slave interface, fully compliant with the AMBA APB Protocol Specification v2.0. For testing purposes, the registers of `archinfo` are writable. But in production environment, these registers are read-only. 
 
 ### Feature
 * 32-bit read-only system architecture register
@@ -29,7 +29,7 @@ The archinfo IP is a fully parameterised soft IP recording the SoC architecture 
 | `[19:8]` | RW | CLOCK |
 | `[7:0]` | RW | SRAM |
 
-reset value: `0x0000_00000`
+reset value: `depend on specific shuttle`
 
 #### ID Low Reigster
 | bit | access  | description |
@@ -39,7 +39,16 @@ reset value: `0x0000_00000`
 | `[21:6]` | RW | PROCESS |
 | `[5:0]` | RW | CUST |
 
-reset value: `0x0000_00000`
+reset value: `depend on specific shuttle`
+
+* TYPE: tape out type 
+    * `2'b00`: OSOC (one student one chip)
+    * `2'b01`: IEDA (open source eda)
+    * `2'b10`: EP (epiboly)
+    * `2'b11`: TEST (prototype test)
+* VENDOR: asic vendor encoding, encoding table is not open currently
+* PROCESS: the process of tape out by using four bits BCD code, for example, the `0130` means the 130nm process
+* CUST: user customized information
 
 #### ID High Reigster
 | bit | access  | description |
@@ -47,9 +56,9 @@ reset value: `0x0000_00000`
 | `[31:24]` | none | reserved |
 | `[23:0]` | RW | DATE |
 
-reset value: `0x0000_00000`
+reset value: `depend on specific shuttle`
 
-DATE: record the tape out date
+* DATE: the date of tape out by using six bits BCD code, for example: 202404
 
 ### Program Guide
 ### Resoureces
