@@ -27,10 +27,29 @@ The archinfo IP is a fully parameterised soft IP recording the SoC architecture 
 |:---:|:-------:| :---------: |
 | `[31:20]` | none | reserved |
 | `[19:8]` | RW | CLOCK |
+| `[7:0]` | RW | SRAM |
+
+reset value: `0x0000_00000`
 
 #### ID Low Reigster
-#### ID High Reigster
+| bit | access  | description |
+|:---:|:-------:| :---------: |
+| `[31:30]` | RW | TYPE |
+| `[29:22]` | RW | VENDOR |
+| `[21:6]` | RW | PROCESS |
+| `[5:0]` | RW | CUST |
 
+reset value: `0x0000_00000`
+
+#### ID High Reigster
+| bit | access  | description |
+|:---:|:-------:| :---------: |
+| `[31:24]` | none | reserved |
+| `[23:0]` | RW | DATE |
+
+reset value: `0x0000_00000`
+
+DATE: record the tape out date
 
 ### Program Guide
 ### Resoureces
