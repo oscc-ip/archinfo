@@ -47,7 +47,7 @@ reset value: `depend on specific shuttle`
     * `2'b10`: EP (epiboly)
     * `2'b11`: TEST (prototype test)
 * VENDOR: asic vendor encoding, the encoding table is currently not publicly open available
-* PROCESS: the process of tape out by using four bits BCD code, for example, the `0130` means the 130nm process
+* PROCESS: the process of tape out by using 4-bit BCD code, for example, the `0130` means the 130nm process
 * CUST: user customized information
 
 #### ID High Reigster
@@ -58,10 +58,10 @@ reset value: `depend on specific shuttle`
 
 reset value: `depend on specific shuttle`
 
-* DATE: the date of tape out by using six bits BCD code, for example: 202404
+* DATE: the date of tape out by using six-bit BCD code, for example: 202404
 
 ### Program Guide
-The software operation of `archinfo` is simple. These registers can be accessed by 4-bytes align read and write. C-like pseudocode read operation:
+The software operation of `archinfo` is simple. These registers can be accessed by 4-byte aligned read and write. C-like pseudocode read operation:
 ```c
 uint32_t val;
 val = archinfo.SYS // read the sys register
