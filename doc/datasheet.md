@@ -31,6 +31,9 @@ The `archinfo` IP is a fully parameterised soft IP recording the SoC architectur
 
 reset value: `depend on specific shuttle`
 
+* CLOCK: core clock frequency information by using three-bit BCD code
+* SRAM: the total size of SRAM, unit: KB. example: `SRAM=128` means 128KB
+
 #### ID Low Reigster
 | bit | access  | description |
 |:---:|:-------:| :---------: |
