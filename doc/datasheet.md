@@ -80,6 +80,7 @@ archinfo.IDL = val // write the idl register
 archinfo.IDH = val // write the idh register
 
 ```
+complete driver and test codes in [driver](../driver/) dir. 
 
 ### Resoureces
 ### References
