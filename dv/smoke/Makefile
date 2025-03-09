@@ -1,38 +1,13 @@
-NOVAS        := /eda/tools/snps/verdi/R-2020.12/share/PLI/VCS/LINUX64
-EXTRA        := -P ${NOVAS}/novas.tab ${NOVAS}/pli.a
-
-VERDI_TOOL   := verdi
-SIM_TOOL     := vcs
-SIM_OPTIONS  := -full64 -debug_acc+all  +v2k -sverilog -timescale=1ns/10ps \
-                ${EXTRA} \
-                +error+500\
-                +define+SVA_OFF\
-                -work DEFAULT\
-                +vcs+flush+all \
-                +lint=TFIPC-L \
-                +define+S50 \
-                -kdb \
-
-ROOT_PATH := ../..
-
-SRC_FILE ?=
-SRC_FILE += ${ROOT_PATH}/rtl/apb4_archinfo.sv
-SRC_FILE += ./archinfo_test.sv
-SRC_FILE += ./test_top.sv
-SRC_FILE += ./apb4_archinfo_tb.sv
-
-SIM_INC ?=
-SIM_INC += +incdir+${ROOT_PATH}/rtl/
-SIM_INC += +incdir+${ROOT_PATH}/../common/rtl/cdc
-SIM_INC += +incdir+${ROOT_PATH}/../common/rtl/clkrst
-SIM_INC += +incdir+${ROOT_PATH}/../common/rtl/interface
-SIM_INC += +incdir+${ROOT_PATH}/../common/rtl/model
-SIM_INC += +incdir+${ROOT_PATH}/../common/rtl/tech
-SIM_INC += +incdir+${ROOT_PATH}/../common/rtl/utils
-SIM_INC += +incdir+${ROOT_PATH}/../common/rtl/verif
+include common.mk
 
 SIM_APP  ?= apb4_archinfo
 SIM_TOP  := $(SIM_APP)_tb
+
+SRC_FILE ?=
+SRC_FILE += ${ROOT_PATH}/rtl/apb4_archinfo.sv
+SRC_FILE += ${ROOT_PATH}/dv/smoke/archinfo_test.sv
+SRC_FILE += ${ROOT_PATH}/dv/smoke/test_top.sv
+SRC_FILE += ${ROOT_PATH}/dv/smoke/apb4_archinfo_tb.sv
 
 WAVE_CFG ?= # WAVE_ON
 RUN_ARGS ?=
@@ -44,10 +19,10 @@ comp:
 	cd build && (${SIM_TOOL} ${SIM_OPTIONS} -top $(SIM_TOP) -l compile.log $(SRC_FILE) $(SIM_INC))
 
 run: comp
-	cd build && ./simv -l run.log ${RUN_ARGS}
+	cd build && (${SIM_BINY} -l run.log ${RUN_ARGS})
 
 wave:
-	${VERDI_TOOL} -ssf build/$(SIM_TOP).fsdb &
+	cd build && (${VERDI_TOOL} -ssf $(SIM_TOP).fsdb &)
 
 clean :
 	rm -rf build

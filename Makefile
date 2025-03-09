@@ -1,14 +1,14 @@
 
 comp-smoke:
-	make -c dv/smoke
+	make -C dv/smoke comp
 
-run-smoke: comp-smoke
-	cd build && ./simv -l run-smoke.log ${RUN_ARGS}
+run-smoke:
+	make -C dv/smoke run
 
 wave-smoke:
-	${VERDI_TOOL} -ssf build/$(SIM_TOP).fsdb &
+	make -C dv/smoke wave
 
 clean :
 	rm -rf build
 
-.PHONY : wave-smoke clean
+.PHONY : comp-smoke run-smoke wave-smoke clean
