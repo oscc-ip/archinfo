@@ -5,6 +5,7 @@ SIM_TOP  := $(SIM_APP)_tb
 
 SRC_FILE ?=
 SRC_FILE += ${ROOT_PATH}/rtl/apb4_archinfo.sv
+SRC_FILE += ${ROOT_PATH}/rtl/archinfo_reg_pkg.sv
 SRC_FILE += ${ROOT_PATH}/dv/smoke/archinfo_test.sv
 SRC_FILE += ${ROOT_PATH}/dv/smoke/test_top.sv
 SRC_FILE += ${ROOT_PATH}/dv/smoke/apb4_archinfo_tb.sv
