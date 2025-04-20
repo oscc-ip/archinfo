@@ -8,8 +8,7 @@
 // MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
 // See the Mulan PSL v2 for more details.
 
-`include "register.sv"
-`include "archinfo_define.sv"
+`include "archinfo_define.svh"
 
 module apb4_archinfo (
     apb4_if.slave apb4
