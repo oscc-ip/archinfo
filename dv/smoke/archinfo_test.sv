@@ -8,11 +8,7 @@
 // MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
 // See the Mulan PSL v2 for more details.
 
-`ifndef INC_ARCHINFO_TEST_SV
-`define INC_ARCHINFO_TEST_SV
-
-`include "apb4_master.sv"
-`include "archinfo_define.sv"
+`include "archinfo_define.svh"
 
 class ArchInfoTest extends APB4Master;
   string                 name;
@@ -48,5 +44,3 @@ task ArchInfoTest::test_wr_rd_reg(input bit [31:0] run_times = 1000);
   end
 
 endtask
-
-`endif

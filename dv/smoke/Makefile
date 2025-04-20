@@ -4,6 +4,11 @@ SIM_APP  ?= apb4_archinfo
 SIM_TOP  := $(SIM_APP)_tb
 
 SRC_FILE ?=
+SRC_FILE += ${ROOT_PATH}/../common/rtl/utils/register.sv
+SRC_FILE += ${ROOT_PATH}/../common/rtl/interface/apb4_if.sv
+SRC_FILE += ${ROOT_PATH}/../common/rtl/verif/helper.sv
+SRC_FILE += ${ROOT_PATH}/../common/rtl/verif/test_base.sv
+SRC_FILE += ${ROOT_PATH}/../common/rtl/verif/apb4_master.sv
 SRC_FILE += ${ROOT_PATH}/rtl/apb4_archinfo.sv
 SRC_FILE += ${ROOT_PATH}/rtl/archinfo_reg_pkg.sv
 SRC_FILE += ${ROOT_PATH}/dv/smoke/archinfo_test.sv

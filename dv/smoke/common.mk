@@ -6,7 +6,7 @@ SIM_BINY     := bsub -Is ./simv
 VERDI_TOOL   := bsub -Is verdi
 SIM_OPTIONS  := -full64 +v2k -sverilog -timescale=1ns/10ps \
                 ${EXTRA} \
-				-kdb \
+                -kdb \
                 -debug_access+all \
                 -debug_region=cell+lib \
                 +error+500 \
@@ -14,7 +14,7 @@ SIM_OPTIONS  := -full64 +v2k -sverilog -timescale=1ns/10ps \
                 +lint=TFIPC-L \
                 -xprop=../xprop.config \
                 -work DEFAULT \
-                +define+RANDOMIZE_REG_INIT \
+                +define+SV_ASSRT_DISABLE \
 
 TIME_OPTION := +notimingcheck \
                +nospecify \
@@ -25,10 +25,4 @@ ROOT_PATH := ../../..
 SIM_INC ?=
 SIM_INC += +incdir+${ROOT_PATH}/rtl/
 SIM_INC += +incdir+${ROOT_PATH}/../common/rtl
-SIM_INC += +incdir+${ROOT_PATH}/../common/rtl/cdc
-SIM_INC += +incdir+${ROOT_PATH}/../common/rtl/clkrst
 SIM_INC += +incdir+${ROOT_PATH}/../common/rtl/interface
-SIM_INC += +incdir+${ROOT_PATH}/../common/rtl/model
-SIM_INC += +incdir+${ROOT_PATH}/../common/rtl/tech
-SIM_INC += +incdir+${ROOT_PATH}/../common/rtl/utils
-SIM_INC += +incdir+${ROOT_PATH}/../common/rtl/verif

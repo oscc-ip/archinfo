@@ -8,8 +8,6 @@
 // MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
 // See the Mulan PSL v2 for more details.
 
-`include "apb4_if.sv"
-
 module apb4_archinfo_tb ();
   localparam CLK_PEROID = 10;
   logic rst_n_i, clk_i;
